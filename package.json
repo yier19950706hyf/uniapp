@@ -1,0 +1,15 @@
+{
+  "name": "open-ui",
+  "version": "1.0.0",
+  "description": "``开源不易，需要鼓励。给 ThorUI项目点个 star吧`` [GitHub](https://github.com/dingyong0214/ThorUI-uniapp)",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.2.5",
+    "jsencrypt": "^3.0.0-rc.1"
+  }
+}

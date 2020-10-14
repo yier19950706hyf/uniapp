@@ -1,0 +1,1 @@
+<view class="container data-v-408c90a6"><view data-event-opts="{{[['tap',[['uchartBtn',['$event']]]]]}}" class="uchart_box data-v-408c90a6" bindtap="__e"><text class="data-v-408c90a6">饼图</text></view><view class="uchart_box data-v-408c90a6"><text class="data-v-408c90a6">圆环图</text></view></view>

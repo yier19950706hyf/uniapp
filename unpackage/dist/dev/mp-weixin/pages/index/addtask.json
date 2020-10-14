@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "新建活动",
+  "usingComponents": {
+    "tui-datetime": "/components/thorui/tui-datetime/tui-datetime"
+  }
+}

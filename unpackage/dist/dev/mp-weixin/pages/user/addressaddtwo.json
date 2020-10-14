@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "新增地址",
+  "usingComponents": {
+    "simple-address": "/components/simple-address/simple-address"
+  }
+}
