@@ -1,1 +1,0 @@
-<view class="pie_box data-v-7dd7e2af"><view class="qiun-charts qiun-rows data-v-7dd7e2af"><canvas class="charts-pie data-v-7dd7e2af" canvas-id="canvasPie" id="canvasPie" data-event-opts="{{[['touchstart',[['touchPie',['$event']]]]]}}" bindtouchstart="__e"></canvas></view></view>

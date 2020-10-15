@@ -13,12 +13,6 @@
 			}
 		},
 		{
-			"path": "pages/find/pie",
-			"style": {
-				"navigationBarTitleText": "饼图"
-			}
-		},
-		{
 			"path": "pages/index/addtask",
 			"style": {
 				"navigationBarTitleText": "新建活动"

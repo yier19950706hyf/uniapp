@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniCalendar: function() {
-    return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 144))
+    return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 153))
   }
 }
 var render = function() {
@@ -201,7 +201,7 @@ var _task = __webpack_require__(/*! ../../api/task.js */ 25); //
 //
 //
 //
-var uniCalendar = function uniCalendar() {Promise.all(/*! require.ensure | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-calendar/uni-calendar.vue */ 144));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var app = getApp();var _default = { data: function data() {return { status: [], lunar: true, //是否显示农历（古历）
+var uniCalendar = function uniCalendar() {Promise.all(/*! require.ensure | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then((function () {return resolve(__webpack_require__(/*! @/components/uni-calendar/uni-calendar.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var app = getApp();var _default = { data: function data() {return { status: [], lunar: true, //是否显示农历（古历）
       minDate: '1920-01-01', maxDate: '2055-12-30', showTask: false, activeBgColor: '#19be6b', result: '', taskList: [], //任务
       rangeColor: 'red', startText: '开始', selected: [] };}, onLoad: function onLoad() {console.log(getCurrentPages()[0].route);var router = getCurrentPages()[0].route;uni.setStorageSync('navUrl', router);}, changeData: function changeData() {console.log(111);}, onShow: function onShow() {console.log(app.globalData.isLogin);var currentdate = (0, _handleData.getNowFormatDate)();console.log((0, _handleData.getNowFormatDate1)());var currentdate1 = (0, _handleData.getNowFormatDate1)();this.result = currentdate1;console.log(currentdate);
     if (currentdate) {
