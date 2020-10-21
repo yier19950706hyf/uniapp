@@ -94,22 +94,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   tuiGrid: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-grid/tui-grid */ "components/thorui/tui-grid/tui-grid").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-grid/tui-grid.vue */ 169))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-grid/tui-grid */ "components/thorui/tui-grid/tui-grid").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-grid/tui-grid.vue */ 175))
   },
   tuiGridItem: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-grid-item/tui-grid-item */ "components/thorui/tui-grid-item/tui-grid-item").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-grid-item/tui-grid-item.vue */ 176))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-grid-item/tui-grid-item */ "components/thorui/tui-grid-item/tui-grid-item").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-grid-item/tui-grid-item.vue */ 182))
   },
   tuiListView: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-list-view/tui-list-view */ "components/thorui/tui-list-view/tui-list-view").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-list-view/tui-list-view.vue */ 183))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-list-view/tui-list-view */ "components/thorui/tui-list-view/tui-list-view").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-list-view/tui-list-view.vue */ 189))
   },
   tuiListCell: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-list-cell/tui-list-cell */ "components/thorui/tui-list-cell/tui-list-cell").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-list-cell/tui-list-cell.vue */ 190))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-list-cell/tui-list-cell */ "components/thorui/tui-list-cell/tui-list-cell").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-list-cell/tui-list-cell.vue */ 196))
   },
   tuiIcon: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-icon/tui-icon */ "components/thorui/tui-icon/tui-icon").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-icon/tui-icon.vue */ 197))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-icon/tui-icon */ "components/thorui/tui-icon/tui-icon").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-icon/tui-icon.vue */ 203))
   },
   tuiTag: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-tag/tui-tag */ "components/thorui/tui-tag/tui-tag").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-tag/tui-tag.vue */ 204))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-tag/tui-tag */ "components/thorui/tui-tag/tui-tag").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-tag/tui-tag.vue */ 210))
   }
 }
 var render = function() {

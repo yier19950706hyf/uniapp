@@ -33,7 +33,16 @@
 				<view class="qiun-title-dot-light">条状图</view>
 			</view>
 			<view class="qiun-charts" >
-				<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" @touchstart="touchColumn"></canvas>
+				<canvas canvas-id="canvasColumnn" id="canvasColumnn" class="charts" @touchstart="touchColumn"></canvas>
+			</view>
+		</view>
+		<!-- 横屏柱状图 -->
+		<view class="qiun-columns">
+			<view class="qiun-bg-white qiun-title-bar qiun-common-mt">
+				<view class="qiun-title-dot-light">横屏柱状图</view>
+			</view>
+			<view class="qiun-charts" >
+				<canvas canvas-id="canvasColumnrow" id="canvasColumnrow" class="charts" @touchstart="touchColumn"></canvas>
 			</view>
 		</view>
 	</view>
@@ -44,6 +53,8 @@
 	var canvaPie = null; //饼图
 	var canvaLineA=null;//折线图
 	var canvaColumn=null;//柱状图
+	var canvaColumnn=null;
+	var canvaColumnrow=null;//横屏柱状图
 	var _self
 	export default {
 		data() {
@@ -92,8 +103,14 @@
 						let ColumnColumn={categories:[],series:[]};
 						ColumnColumn.categories=res.data.data.ColumnB.categories;
 						ColumnColumn.series=res.data.data.ColumnB.series;
-						_self.showColumnColumn("canvasColumn",ColumnColumn);
+						_self.showColumnColumn("canvasColumnn",ColumnColumn);
 						// -----------条状图结束-------------
+						// -----------横屏柱状图-------------
+						let ColumnRow={categories:[],series:[]};
+						ColumnRow.categories=res.data.data.ColumnB.categories;
+						ColumnRow.series=res.data.data.ColumnB.series;
+						_self.showColumnRow("canvasColumnrow",ColumnRow)
+						// -----------横屏柱状图-------------
 					},
 					fail: () => {
 						_self.$util.toast('网络错误，小程序端请检查合法域名')
@@ -231,7 +248,7 @@
 			// -----------柱状图结束-------------
 			// -----------条状图开始-------------
 			showColumnColumn(canvasId,chartData){
-				canvaColumn=new uCharts({
+				canvaColumnn=new uCharts({
 					$this:_self,
 					canvasId:canvasId,
 					type:'column',
@@ -265,9 +282,47 @@
 						}
 					}
 				})
-			}
+			},
 			
 			// -----------条状图结束-------------
+			// -----------横屏柱状图开始---------
+			showColumnRow(canvasId,chartData){
+				canvaColumnrow=new uCharts({
+					$this:_self,
+					canvasId:canvasId,
+					type:'column',
+					legend:{
+						show:true
+					},
+					fontSize:11,
+					background:"#fff",
+					pixelRatio:_self.pixelRatio,
+					animation: true,
+					rotate:true,
+					// #ifdef MP-ALIPAY || MP-BAIDU
+					rotateLock:true,//百度及支付宝需要锁定旋转
+					// #endif
+					categories:chartData.categories,
+					series:chartData.series,//
+					xAxis:{
+						disableGrid:true//是否绘制X轴网格
+					},
+					yAxis:{
+						
+					},
+					dataLabel:true,//是否在图表中显示数据标签内容值
+					width:_self.cWidth*_self.pixelRatio,
+					height:_self.cHeight*_self.pixelRatio,
+				})
+			},
+			touchColumn(e){
+				canvaColumnrow.showToolTip(e, {
+					format: function (item, category) {
+						return category + ' ' + item.name + ':' + item.data 
+					}
+				});
+			}
+			// -----------横屏柱状图结束---------
 		}
 	}
 </script>

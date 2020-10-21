@@ -5,7 +5,7 @@
   },
   "setting": {
     "urlCheck": false,
-    "es6": true,
+    "es6": false,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
@@ -43,18 +43,6 @@
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
     "search": {
       "current": -1,
       "list": []
@@ -63,16 +51,13 @@
       "current": -1,
       "list": []
     },
+    "game": {
+      "current": -1,
+      "list": []
+    },
     "miniprogram": {
       "current": -1,
-      "list": [
-        {
-          "id": -1,
-          "name": "pages/find/find",
-          "pathName": "pages/find/find",
-          "scene": null
-        }
-      ]
+      "list": []
     }
   }
 }

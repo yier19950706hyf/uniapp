@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   tuiDatetime: function() {
-    return __webpack_require__.e(/*! import() | components/thorui/tui-datetime/tui-datetime */ "components/thorui/tui-datetime/tui-datetime").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-datetime/tui-datetime.vue */ 162))
+    return __webpack_require__.e(/*! import() | components/thorui/tui-datetime/tui-datetime */ "components/thorui/tui-datetime/tui-datetime").then(__webpack_require__.bind(null, /*! @/components/thorui/tui-datetime/tui-datetime.vue */ 168))
   }
 }
 var render = function() {

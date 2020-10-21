@@ -102,7 +102,7 @@ const utils = {
 								success:()=>{
 									//个人中心页不跳转
 									console.log(uni.getStorageSync("navUrl"))
-									if (uni.getStorageSync("navUrl") != "pages/index/index") {
+									// if (uni.getStorageSync("navUrl") != "pages/index/index") {
 										// #ifdef H5
 										utils.modal('温馨提示', '您还没有登录，是否去登录', true, (confirm) => {
 											if (confirm) {
@@ -128,7 +128,7 @@ const utils = {
 											url:'/pages/common/wxlogin/wxlogin'
 										})
 										// #endif
-									}
+									// }
 								}
 							})
 						}

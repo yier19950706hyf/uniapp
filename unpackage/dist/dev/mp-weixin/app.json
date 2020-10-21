@@ -8,6 +8,7 @@
     "pages/user/address",
     "pages/user/addressaddtwo",
     "pages/user/nickname",
+    "pages/charts/wxecharts",
     "pages/common/about/about",
     "pages/common/update/update",
     "pages/common/log/log",
@@ -45,6 +46,12 @@
         "selectedIconPath": "static/images/tabbar/code_active.png"
       },
       {
+        "pagePath": "pages/charts/wxecharts",
+        "text": "微信图表",
+        "iconPath": "static/images/tabbar/code_gray.png",
+        "selectedIconPath": "static/images/tabbar/code_active.png"
+      },
+      {
         "pagePath": "pages/user/user",
         "text": "我的",
         "iconPath": "static/images/tabbar/thor_gray.png",
@@ -53,5 +60,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap43.json"
+  "sitemapLocation": "sitemap73.json"
 }

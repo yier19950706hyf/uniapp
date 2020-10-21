@@ -904,7 +904,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2035,384 +2035,6 @@ store;exports.default = _default;
 
 /***/ }),
 
-/***/ 117:
-/*!*************************************************!*\
-  !*** F:/xinchenstudyline/open-ui/utils/util.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * 数据处理
- * @author echo.
- * @version 1.5.0
- **/
-var utils = {
-  //去空格
-  trim: function trim(value) {
-    return value.replace(/(^\s*)|(\s*$)/g, "");
-  },
-  //内容替换
-  replaceAll: function replaceAll(text, repstr, newstr) {
-    return text.replace(new RegExp(repstr, "gm"), newstr);
-  },
-  //格式化手机号码
-  formatNumber: function formatNumber(num) {
-    return num.length === 11 ? num.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2') : num;
-  },
-  //金额格式化
-  rmoney: function rmoney(money) {
-    return parseFloat(money).toFixed(2).toString().split('').reverse().join('').replace(/(\d{3})/g, '$1,').replace(
-    /\,$/, '').split('').reverse().join('');
-  },
-  //日期格式化
-  formatDate: function formatDate(formatStr, fdate) {
-    if (fdate) {
-      if (~fdate.indexOf('.')) {
-        fdate = fdate.substring(0, fdate.indexOf('.'));
-      }
-      fdate = fdate.toString().replace('T', ' ').replace(/\-/g, '/');
-      var fTime,fStr = 'ymdhis';
-      if (!formatStr)
-      formatStr = "y-m-d h:i:s";
-      if (fdate)
-      fTime = new Date(fdate);else
-
-      fTime = new Date();
-      var month = fTime.getMonth() + 1;
-      var day = fTime.getDate();
-      var hours = fTime.getHours();
-      var minu = fTime.getMinutes();
-      var second = fTime.getSeconds();
-      month = month < 10 ? '0' + month : month;
-      day = day < 10 ? '0' + day : day;
-      hours = hours < 10 ? '0' + hours : hours;
-      minu = minu < 10 ? '0' + minu : minu;
-      second = second < 10 ? '0' + second : second;
-      var formatArr = [
-      fTime.getFullYear().toString(),
-      month.toString(),
-      day.toString(),
-      hours.toString(),
-      minu.toString(),
-      second.toString()];
-
-      for (var i = 0; i < formatArr.length; i++) {
-        formatStr = formatStr.replace(fStr.charAt(i), formatArr[i]);
-      }
-      return formatStr;
-    } else {
-      return "";
-    }
-  },
-  rgbToHex: function rgbToHex(r, g, b) {
-    return "#" + utils.toHex(r) + utils.toHex(g) + utils.toHex(b);
-  },
-  toHex: function toHex(n) {
-    n = parseInt(n, 10);
-    if (isNaN(n)) return "00";
-    n = Math.max(0, Math.min(n, 255));
-    return "0123456789ABCDEF".charAt((n - n % 16) / 16) +
-    "0123456789ABCDEF".charAt(n % 16);
-  },
-  hexToRgb: function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16) } :
-    null;
-  } };
-
-
-module.exports = {
-  trim: utils.trim,
-  replaceAll: utils.replaceAll,
-  formatNumber: utils.formatNumber,
-  rmoney: utils.rmoney,
-  formatDate: utils.formatDate,
-  rgbToHex: utils.rgbToHex,
-  hexToRgb: utils.hexToRgb };
-
-/***/ }),
-
-/***/ 118:
-/*!**************************************************************************************!*\
-  !*** F:/xinchenstudyline/open-ui/components/common/tui-validation/tui-validation.js ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * 表单验证
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * @author echo.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * @version 1.5.0
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        **/
-
-var form = {
-  //非必填情况下,如果值为空,则不进行校验
-  //当出现错误时返回错误消息，否则返回空即为验证通过
-  /*
-   formData:Object 表单对象。{key:value,key:value},key==rules.name
-   rules: Array [{name:name,rule:[],msg:[]},{name:name,rule:[],msg:[]}]
-  		name:name 属性=> 元素的名称
-  		rule:字符串数组 ["required","isMobile","isEmail","isCarNo","isIdCard","isAmount","isNum","isChinese","isEnglish",isEnAndNo","isSpecial","isEmoji",""isDate","isUrl","isSame:key","range:[1,9]","minLength:9","maxLength:Number"]
-  		msg:数组 []。 与数组 rule 长度相同,对应的错误提示信息
-  */
-  validation: function validation(formData, rules) {var _iterator = _createForOfIteratorHelper(
-    rules),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
-        var key = item.name;
-        var rule = item.rule;
-        var msgArr = item.msg;
-        if (!key || !rule || rule.length === 0 || !msgArr || msgArr.length === 0) {
-          continue;
-        }
-        for (var i = 0, length = rule.length; i < length; i++) {
-          var ruleItem = rule[i];
-          var msg = msgArr[i];
-          if (!ruleItem || !msg || !~rule.indexOf("required") && formData[key].toString().length === 0) {
-            continue;
-          }
-          //数据处理
-          var value = null;
-          if (~ruleItem.indexOf(":")) {
-            var temp = ruleItem.split(":");
-            ruleItem = temp[0];
-            value = temp[1];
-          }
-          var isError = false;
-          switch (ruleItem) {
-            case "required":
-              isError = form._isNullOrEmpty(formData[key]);
-              break;
-            case "isMobile":
-              isError = !form._isMobile(formData[key]);
-              break;
-            case "isEmail":
-              isError = !form._isEmail(formData[key]);
-              break;
-            case "isCarNo":
-              isError = !form._isCarNo(formData[key]);
-              break;
-            case "isIdCard":
-              isError = !form._isIdCard(formData[key]);
-              break;
-            case "isAmount":
-              isError = !form._isAmount(formData[key]);
-              break;
-            case "isNum":
-              isError = !form._isNum(formData[key]);
-              break;
-            case "isChinese":
-              isError = !form._isChinese(formData[key]);
-              break;
-            case "isEnglish":
-              isError = !form._isEnglish(formData[key]);
-              break;
-            case "isEnAndNo":
-              isError = !form._isEnAndNo(formData[key]);
-              break;
-            case "isEnOrNo":
-              isError = !form._isEnOrNo(formData[key]);
-              break;
-            case "isSpecial":
-              isError = form._isSpecial(formData[key]);
-              break;
-            case "isEmoji":
-              isError = form._isEmoji(formData[key]);
-              break;
-            case "isDate":
-              isError = !form._isDate(formData[key]);
-              break;
-            case "isUrl":
-              isError = !form._isUrl(formData[key]);
-              break;
-            case "isSame":
-              isError = !form._isSame(formData[key], formData[value]);
-              break;
-            case "range":
-              var range = null;
-              try {
-                range = JSON.parse(value);
-                if (range.length <= 1) {
-                  throw new Error("range值传入有误！");
-                }
-              } catch (e) {
-                return "range值传入有误！";
-              }
-              isError = !form._isRange(formData[key], range[0], range[1]);
-              break;
-            case "minLength":
-              isError = !form._minLength(formData[key], value);
-              break;
-            case "maxLength":
-              isError = !form._maxLength(formData[key], value);
-              break;
-            default:
-              break;}
-
-          if (isError) {
-            return msg;
-          }
-        }
-      }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
-    return "";
-  },
-  _isNullOrEmpty: function _isNullOrEmpty(value) {
-    return value === null || value === '' || value === undefined ? true : false;
-  },
-  _isMobile: function _isMobile(value) {
-    return /^(?:13\d|14\d|15\d|16\d|17\d|18\d|19\d)\d{5}(\d{3}|\*{3})$/.test(value);
-  },
-  _isEmail: function _isEmail(value) {
-    return /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(value);
-  },
-  _isCarNo: function _isCarNo(value) {
-    // 新能源车牌
-    var xreg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/;
-    // 旧车牌
-    var creg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/;
-    if (value.length === 7) {
-      return creg.test(value);
-    } else if (value.length === 8) {
-      return xreg.test(value);
-    } else {
-      return false;
-    }
-  },
-  _isIdCard: function _isIdCard(value) {
-    var idCard = value;
-    if (idCard.length == 15) {
-      return this.__isValidityBrithBy15IdCard;
-    } else if (idCard.length == 18) {
-      var arrIdCard = idCard.split("");
-      if (this.__isValidityBrithBy18IdCard(idCard) && this.__isTrueValidateCodeBy18IdCard(arrIdCard)) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  },
-  __isTrueValidateCodeBy18IdCard: function __isTrueValidateCodeBy18IdCard(arrIdCard) {
-    var sum = 0;
-    var Wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
-    var ValideCode = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2];
-    if (arrIdCard[17].toLowerCase() == 'x') {
-      arrIdCard[17] = 10;
-    }
-    for (var i = 0; i < 17; i++) {
-      sum += Wi[i] * arrIdCard[i];
-    }
-    var valCodePosition = sum % 11;
-    if (arrIdCard[17] == ValideCode[valCodePosition]) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  __isValidityBrithBy18IdCard: function __isValidityBrithBy18IdCard(idCard18) {
-    var year = idCard18.substring(6, 10);
-    var month = idCard18.substring(10, 12);
-    var day = idCard18.substring(12, 14);
-    var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));
-    if (temp_date.getFullYear() != parseFloat(year) || temp_date.getMonth() != parseFloat(month) - 1 || temp_date.getDate() !=
-    parseFloat(day)) {
-      return false;
-    } else {
-      return true;
-    }
-  },
-  __isValidityBrithBy15IdCard: function __isValidityBrithBy15IdCard(idCard15) {
-    var year = idCard15.substring(6, 8);
-    var month = idCard15.substring(8, 10);
-    var day = idCard15.substring(10, 12);
-    var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));
-
-    if (temp_date.getYear() != parseFloat(year) || temp_date.getMonth() != parseFloat(month) - 1 || temp_date.getDate() !=
-    parseFloat(day)) {
-      return false;
-    } else {
-      return true;
-    }
-  },
-  _isAmount: function _isAmount(value) {
-    //金额，只允许保留两位小数
-    return /^([0-9]*[.]?[0-9])[0-9]{0,1}$/.test(value);
-  },
-  _isNum: function _isNum(value) {
-    //只能为数字
-    return /^[0-9]+$/.test(value);
-  },
-  _isChinese: function _isChinese(value) {
-    var reg = /.*[\u4e00-\u9fa5]+.*$/;
-    return value !== "" && reg.test(value) && !form._isSpecial(value) && !form._isEmoji(value);
-  },
-  _isEnglish: function _isEnglish(value) {
-    return /^[a-zA-Z]*$/.test(value);
-  },
-  _isEnAndNo: function _isEnAndNo(value) {
-    //8~20位数字和字母组合
-    return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/.test(value);
-  },
-  _isEnOrNo: function _isEnOrNo(value) {
-    //英文或者数字
-    var reg = /.*[\u4e00-\u9fa5]+.*$/;
-    var result = true;
-    if (reg.test(value) || form._isSpecial(value) || form._isEmoji(value)) {
-      result = false;
-    }
-    return result;
-  },
-  _isSpecial: function _isSpecial(value) {
-    //是否包含特殊字符
-    var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
-    regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
-    if (regEn.test(value) || regCn.test(value)) {
-      return true;
-    }
-    return false;
-  },
-  _isEmoji: function _isEmoji(value) {
-    //是否包含表情
-    return /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g.test(value);
-  },
-  _isDate: function _isDate(value) {
-    //2019-10-12
-    var reg =
-    /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/;
-    return reg.test(value);
-  },
-  _isUrl: function _isUrl(value) {
-    return /^((https?|ftp|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value);
-  },
-  _isSame: function _isSame(value1, value2) {
-    return value1 === value2;
-  },
-  _isRange: function _isRange(value, range1, range2) {
-    if (!range1 && range1 != 0 && !range2 && range2 != 0) {
-      return true;
-    } else if (!range1 && range1 != 0) {
-      return value <= range2;
-    } else if (!range2 && range2 != 0) {
-      return value >= range1;
-    } else {
-      return value >= range1 && value <= range2;
-    }
-  },
-  _minLength: function _minLength(value, min) {
-    return value.length >= Number(min);
-  },
-  _maxLength: function _maxLength(value, max) {
-    return value.length <= Number(max);
-  } };
-
-module.exports = {
-  validation: form.validation };
-
-/***/ }),
-
 /***/ 12:
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
@@ -3526,6 +3148,384 @@ var index = {
 
 /***/ }),
 
+/***/ 123:
+/*!*************************************************!*\
+  !*** F:/xinchenstudyline/open-ui/utils/util.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * 数据处理
+ * @author echo.
+ * @version 1.5.0
+ **/
+var utils = {
+  //去空格
+  trim: function trim(value) {
+    return value.replace(/(^\s*)|(\s*$)/g, "");
+  },
+  //内容替换
+  replaceAll: function replaceAll(text, repstr, newstr) {
+    return text.replace(new RegExp(repstr, "gm"), newstr);
+  },
+  //格式化手机号码
+  formatNumber: function formatNumber(num) {
+    return num.length === 11 ? num.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2') : num;
+  },
+  //金额格式化
+  rmoney: function rmoney(money) {
+    return parseFloat(money).toFixed(2).toString().split('').reverse().join('').replace(/(\d{3})/g, '$1,').replace(
+    /\,$/, '').split('').reverse().join('');
+  },
+  //日期格式化
+  formatDate: function formatDate(formatStr, fdate) {
+    if (fdate) {
+      if (~fdate.indexOf('.')) {
+        fdate = fdate.substring(0, fdate.indexOf('.'));
+      }
+      fdate = fdate.toString().replace('T', ' ').replace(/\-/g, '/');
+      var fTime,fStr = 'ymdhis';
+      if (!formatStr)
+      formatStr = "y-m-d h:i:s";
+      if (fdate)
+      fTime = new Date(fdate);else
+
+      fTime = new Date();
+      var month = fTime.getMonth() + 1;
+      var day = fTime.getDate();
+      var hours = fTime.getHours();
+      var minu = fTime.getMinutes();
+      var second = fTime.getSeconds();
+      month = month < 10 ? '0' + month : month;
+      day = day < 10 ? '0' + day : day;
+      hours = hours < 10 ? '0' + hours : hours;
+      minu = minu < 10 ? '0' + minu : minu;
+      second = second < 10 ? '0' + second : second;
+      var formatArr = [
+      fTime.getFullYear().toString(),
+      month.toString(),
+      day.toString(),
+      hours.toString(),
+      minu.toString(),
+      second.toString()];
+
+      for (var i = 0; i < formatArr.length; i++) {
+        formatStr = formatStr.replace(fStr.charAt(i), formatArr[i]);
+      }
+      return formatStr;
+    } else {
+      return "";
+    }
+  },
+  rgbToHex: function rgbToHex(r, g, b) {
+    return "#" + utils.toHex(r) + utils.toHex(g) + utils.toHex(b);
+  },
+  toHex: function toHex(n) {
+    n = parseInt(n, 10);
+    if (isNaN(n)) return "00";
+    n = Math.max(0, Math.min(n, 255));
+    return "0123456789ABCDEF".charAt((n - n % 16) / 16) +
+    "0123456789ABCDEF".charAt(n % 16);
+  },
+  hexToRgb: function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16) } :
+    null;
+  } };
+
+
+module.exports = {
+  trim: utils.trim,
+  replaceAll: utils.replaceAll,
+  formatNumber: utils.formatNumber,
+  rmoney: utils.rmoney,
+  formatDate: utils.formatDate,
+  rgbToHex: utils.rgbToHex,
+  hexToRgb: utils.hexToRgb };
+
+/***/ }),
+
+/***/ 124:
+/*!**************************************************************************************!*\
+  !*** F:/xinchenstudyline/open-ui/components/common/tui-validation/tui-validation.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * 表单验证
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * @author echo.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * @version 1.5.0
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        **/
+
+var form = {
+  //非必填情况下,如果值为空,则不进行校验
+  //当出现错误时返回错误消息，否则返回空即为验证通过
+  /*
+   formData:Object 表单对象。{key:value,key:value},key==rules.name
+   rules: Array [{name:name,rule:[],msg:[]},{name:name,rule:[],msg:[]}]
+  		name:name 属性=> 元素的名称
+  		rule:字符串数组 ["required","isMobile","isEmail","isCarNo","isIdCard","isAmount","isNum","isChinese","isEnglish",isEnAndNo","isSpecial","isEmoji",""isDate","isUrl","isSame:key","range:[1,9]","minLength:9","maxLength:Number"]
+  		msg:数组 []。 与数组 rule 长度相同,对应的错误提示信息
+  */
+  validation: function validation(formData, rules) {var _iterator = _createForOfIteratorHelper(
+    rules),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
+        var key = item.name;
+        var rule = item.rule;
+        var msgArr = item.msg;
+        if (!key || !rule || rule.length === 0 || !msgArr || msgArr.length === 0) {
+          continue;
+        }
+        for (var i = 0, length = rule.length; i < length; i++) {
+          var ruleItem = rule[i];
+          var msg = msgArr[i];
+          if (!ruleItem || !msg || !~rule.indexOf("required") && formData[key].toString().length === 0) {
+            continue;
+          }
+          //数据处理
+          var value = null;
+          if (~ruleItem.indexOf(":")) {
+            var temp = ruleItem.split(":");
+            ruleItem = temp[0];
+            value = temp[1];
+          }
+          var isError = false;
+          switch (ruleItem) {
+            case "required":
+              isError = form._isNullOrEmpty(formData[key]);
+              break;
+            case "isMobile":
+              isError = !form._isMobile(formData[key]);
+              break;
+            case "isEmail":
+              isError = !form._isEmail(formData[key]);
+              break;
+            case "isCarNo":
+              isError = !form._isCarNo(formData[key]);
+              break;
+            case "isIdCard":
+              isError = !form._isIdCard(formData[key]);
+              break;
+            case "isAmount":
+              isError = !form._isAmount(formData[key]);
+              break;
+            case "isNum":
+              isError = !form._isNum(formData[key]);
+              break;
+            case "isChinese":
+              isError = !form._isChinese(formData[key]);
+              break;
+            case "isEnglish":
+              isError = !form._isEnglish(formData[key]);
+              break;
+            case "isEnAndNo":
+              isError = !form._isEnAndNo(formData[key]);
+              break;
+            case "isEnOrNo":
+              isError = !form._isEnOrNo(formData[key]);
+              break;
+            case "isSpecial":
+              isError = form._isSpecial(formData[key]);
+              break;
+            case "isEmoji":
+              isError = form._isEmoji(formData[key]);
+              break;
+            case "isDate":
+              isError = !form._isDate(formData[key]);
+              break;
+            case "isUrl":
+              isError = !form._isUrl(formData[key]);
+              break;
+            case "isSame":
+              isError = !form._isSame(formData[key], formData[value]);
+              break;
+            case "range":
+              var range = null;
+              try {
+                range = JSON.parse(value);
+                if (range.length <= 1) {
+                  throw new Error("range值传入有误！");
+                }
+              } catch (e) {
+                return "range值传入有误！";
+              }
+              isError = !form._isRange(formData[key], range[0], range[1]);
+              break;
+            case "minLength":
+              isError = !form._minLength(formData[key], value);
+              break;
+            case "maxLength":
+              isError = !form._maxLength(formData[key], value);
+              break;
+            default:
+              break;}
+
+          if (isError) {
+            return msg;
+          }
+        }
+      }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
+    return "";
+  },
+  _isNullOrEmpty: function _isNullOrEmpty(value) {
+    return value === null || value === '' || value === undefined ? true : false;
+  },
+  _isMobile: function _isMobile(value) {
+    return /^(?:13\d|14\d|15\d|16\d|17\d|18\d|19\d)\d{5}(\d{3}|\*{3})$/.test(value);
+  },
+  _isEmail: function _isEmail(value) {
+    return /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(value);
+  },
+  _isCarNo: function _isCarNo(value) {
+    // 新能源车牌
+    var xreg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/;
+    // 旧车牌
+    var creg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/;
+    if (value.length === 7) {
+      return creg.test(value);
+    } else if (value.length === 8) {
+      return xreg.test(value);
+    } else {
+      return false;
+    }
+  },
+  _isIdCard: function _isIdCard(value) {
+    var idCard = value;
+    if (idCard.length == 15) {
+      return this.__isValidityBrithBy15IdCard;
+    } else if (idCard.length == 18) {
+      var arrIdCard = idCard.split("");
+      if (this.__isValidityBrithBy18IdCard(idCard) && this.__isTrueValidateCodeBy18IdCard(arrIdCard)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  },
+  __isTrueValidateCodeBy18IdCard: function __isTrueValidateCodeBy18IdCard(arrIdCard) {
+    var sum = 0;
+    var Wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1];
+    var ValideCode = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+    if (arrIdCard[17].toLowerCase() == 'x') {
+      arrIdCard[17] = 10;
+    }
+    for (var i = 0; i < 17; i++) {
+      sum += Wi[i] * arrIdCard[i];
+    }
+    var valCodePosition = sum % 11;
+    if (arrIdCard[17] == ValideCode[valCodePosition]) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  __isValidityBrithBy18IdCard: function __isValidityBrithBy18IdCard(idCard18) {
+    var year = idCard18.substring(6, 10);
+    var month = idCard18.substring(10, 12);
+    var day = idCard18.substring(12, 14);
+    var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));
+    if (temp_date.getFullYear() != parseFloat(year) || temp_date.getMonth() != parseFloat(month) - 1 || temp_date.getDate() !=
+    parseFloat(day)) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  __isValidityBrithBy15IdCard: function __isValidityBrithBy15IdCard(idCard15) {
+    var year = idCard15.substring(6, 8);
+    var month = idCard15.substring(8, 10);
+    var day = idCard15.substring(10, 12);
+    var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));
+
+    if (temp_date.getYear() != parseFloat(year) || temp_date.getMonth() != parseFloat(month) - 1 || temp_date.getDate() !=
+    parseFloat(day)) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  _isAmount: function _isAmount(value) {
+    //金额，只允许保留两位小数
+    return /^([0-9]*[.]?[0-9])[0-9]{0,1}$/.test(value);
+  },
+  _isNum: function _isNum(value) {
+    //只能为数字
+    return /^[0-9]+$/.test(value);
+  },
+  _isChinese: function _isChinese(value) {
+    var reg = /.*[\u4e00-\u9fa5]+.*$/;
+    return value !== "" && reg.test(value) && !form._isSpecial(value) && !form._isEmoji(value);
+  },
+  _isEnglish: function _isEnglish(value) {
+    return /^[a-zA-Z]*$/.test(value);
+  },
+  _isEnAndNo: function _isEnAndNo(value) {
+    //8~20位数字和字母组合
+    return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/.test(value);
+  },
+  _isEnOrNo: function _isEnOrNo(value) {
+    //英文或者数字
+    var reg = /.*[\u4e00-\u9fa5]+.*$/;
+    var result = true;
+    if (reg.test(value) || form._isSpecial(value) || form._isEmoji(value)) {
+      result = false;
+    }
+    return result;
+  },
+  _isSpecial: function _isSpecial(value) {
+    //是否包含特殊字符
+    var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
+    regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]]/im;
+    if (regEn.test(value) || regCn.test(value)) {
+      return true;
+    }
+    return false;
+  },
+  _isEmoji: function _isEmoji(value) {
+    //是否包含表情
+    return /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g.test(value);
+  },
+  _isDate: function _isDate(value) {
+    //2019-10-12
+    var reg =
+    /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/;
+    return reg.test(value);
+  },
+  _isUrl: function _isUrl(value) {
+    return /^((https?|ftp|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value);
+  },
+  _isSame: function _isSame(value1, value2) {
+    return value1 === value2;
+  },
+  _isRange: function _isRange(value, range1, range2) {
+    if (!range1 && range1 != 0 && !range2 && range2 != 0) {
+      return true;
+    } else if (!range1 && range1 != 0) {
+      return value <= range2;
+    } else if (!range2 && range2 != 0) {
+      return value >= range1;
+    } else {
+      return value >= range1 && value <= range2;
+    }
+  },
+  _minLength: function _minLength(value, min) {
+    return value.length >= Number(min);
+  },
+  _maxLength: function _maxLength(value, max) {
+    return value.length <= Number(max);
+  } };
+
+module.exports = {
+  validation: form.validation };
+
+/***/ }),
+
 /***/ 13:
 /*!*********************************************************!*\
   !*** F:/xinchenstudyline/open-ui/store/modules/user.js ***!
@@ -3783,7 +3783,328 @@ tui;exports.default = _default;
 
 /***/ }),
 
-/***/ 158:
+/***/ 16:
+/*!************************************************!*\
+  !*** F:/xinchenstudyline/open-ui/utils/api.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _auth = __webpack_require__(/*! @/utils/auth */ 17);
+/**
+                                                   * 所有api请求地址
+                                                   */
+var apiLink = {
+  // 微信登录
+  AuthLoginByWeixin111: { url: '/pl/login ', text: '登录接口' },
+  // h5的登录注册
+  AuthLoginByWeixin: { url: '/pl/login', text: 'h5登录接口' },
+  getCode: { url: '/pl/vaildation', text: '获取手机验证码' },
+  reg: { url: '', text: '注册接口' },
+  resetpwd: { url: '/pl/phReset', text: "修改密码" },
+  // 我的页面的接口地址
+  getUserinfo: { url: '/api/tzUserApi/persInformation', text: '获取个人信息接口' },
+  AddressList: { url: '/api/userAddr/addrList', text: '收货地址列表' },
+  Addressdetail: { url: '/api/userAddr/addrById', text: '点击编辑进去修改页面' },
+  AddressSave: { url: '/api/userAddr/addrSave', text: '保存编辑收货地址' },
+  AddressDelete: { url: '/api/userAddr/addrDelete', text: '删除收货地址' },
+
+  // 日历写法
+  calendarList: { url: '/api/calebdarwork/list', text: '日历列表' },
+  calebdarInsert: { url: '/api/calebdarwork/calebdarInsert', text: '添加任务' },
+  calendarUpdate: { url: '/api/calebdarwork/calebdarUpdate', text: '修改任务' } };
+
+
+var utils = {
+  // 域名 + 'wechat/'
+  // httpUrl: 'http://127.0.0.1:8090/',
+
+
+
+
+  httpUrl: 'http://192.168.1.61:8090',
+
+  //接口地址
+  interfaceUrl: function interfaceUrl() {
+    return utils.httpUrl;
+  },
+  delayed: null,
+  /**
+                  * 请求数据处理
+                  * @param string url 请求地址
+                  * @param {*} postData 请求参数
+                  * @param string method 请求方式
+                  *  GET or POST
+                  * @param string contentType 数据格式
+                  *  'application/x-www-form-urlencoded'
+                  *  'application/json'
+                  * @param bool isDelay 是否延迟显示loading
+                  * @param bool hideLoading 是否隐藏loading
+                  *  true: 隐藏
+                  *  false:显示
+                  */
+  request: function request(httpurl)
+  {var postData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var method = arguments.length > 2 ? arguments[2] : undefined;var contentType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "application/x-www-form-urlencoded";var isDelay = arguments.length > 4 ? arguments[4] : undefined;var hideLoading = arguments.length > 5 ? arguments[5] : undefined;
+    //接口请求
+    var loadding = false;
+    utils.delayed && uni.hideLoading();
+    clearTimeout(utils.delayed);
+    utils.delayed = null;
+    if (!hideLoading) {
+      utils.delayed = setTimeout(function () {
+        uni.showLoading({
+          mask: true,
+          title: '请稍候...',
+          success: function success(res) {
+            loadding = true;
+          } });
+
+      }, isDelay ? 1000 : 0);
+    }
+
+    return new Promise(function (resolve, reject) {
+
+      uni.request({
+        url: utils.interfaceUrl() + httpurl.url,
+        data: postData,
+        header: {
+          // 'content-type': contentType,
+          'Authorization': (0, _auth.getToken)() },
+
+        method: method, //'GET','POST'
+        dataType: 'json',
+        success: function success(res) {
+          console.log("".concat(httpurl.text, "+").concat(utils.interfaceUrl(), " ").concat(httpurl.url, "+").concat(JSON.stringify(postData)));
+          console.log(res.data);
+          if (loadding && !hideLoading) {
+            uni.hideLoading();
+          }
+          if (res.statusCode === 200) {
+            if (res.data.errno === 401) {
+              //返回码401说明token过期或者用户未登录
+
+            } else if (res.data.errno === 500) {
+              utils.toast(res.data.msg);
+            } else if (res.data.errno === 404) {
+              utils.toast(res.data.msg);
+            } else if (res.data.statusCode === -10001) {
+              reject(res.msg);
+              uni.removeStorage({
+                key: 'token',
+                success: function success() {
+                  //个人中心页不跳转
+                  console.log(uni.getStorageSync("navUrl"));
+                  // if (uni.getStorageSync("navUrl") != "pages/index/index") {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  uni.navigateTo({
+                    url: '/pages/common/wxlogin/wxlogin' });
+
+
+                  // }
+                } });
+
+            } else
+            {
+              resolve(res.data);
+            }
+          } else {
+            reject(res.data);
+          }
+        },
+        fail: function fail(res) {
+          utils.toast("网络不给力，请稍后再试~");
+          reject(res);
+        },
+        complete: function complete(res) {
+          clearTimeout(utils.delayed);
+          utils.delayed = null;
+          if (res.statusCode === 200) {
+            if (res.data.errno === 0 || res.data.errno === 401) {
+              uni.hideLoading();
+            } else {
+              uni.hideLoading();
+              // utils.toast(res.data.msg)
+            }
+          } else {
+            utils.toast('服务器开小差了~');
+          }
+        } });
+
+    });
+  },
+  toast: function toast(text, duration, success) {
+    uni.showToast({
+      title: text || "出错啦~",
+      icon: success || 'none',
+      duration: duration || 2000 });
+
+  },
+  modal: function modal(title, content) {var showCancel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;var callback = arguments.length > 3 ? arguments[3] : undefined;var confirmColor = arguments.length > 4 ? arguments[4] : undefined;var confirmText = arguments.length > 5 ? arguments[5] : undefined;var cancelColor = arguments.length > 6 ? arguments[6] : undefined;var cancelText = arguments.length > 7 ? arguments[7] : undefined;
+    uni.showModal({
+      title: title || '提示',
+      content: content,
+      showCancel: showCancel,
+      cancelColor: cancelColor || "#555",
+      confirmColor: confirmColor || "#e41f19",
+      confirmText: confirmText || "确定",
+      cancelText: cancelText || "取消",
+      success: function success(res) {
+        if (res.confirm) {
+          callback && callback(true);
+        } else {
+          callback && callback(false);
+        }
+      } });
+
+  },
+
+  /**
+      * 调用微信登录
+      */
+  login: function login() {
+    return new Promise(function (resolve, reject) {
+      uni.login({
+        success: function success(res) {
+          if (res.code) {
+            resolve(res);
+          } else {
+            reject(res);
+          }
+        },
+        fail: function fail(err) {
+          reject(err);
+        } });
+
+    });
+  },
+
+  // 点击登录获取code，然后调登录接口进行登录
+  loginByWeixin: function loginByWeixin(userInfo) {
+    var code = null;
+    return new Promise(function (resolve, reject) {
+      return utils.login().then(function (res) {
+        code = res.code;
+        return userInfo;
+      }).then(function (userInfo) {
+        //登录远程服务器
+        console.log('code:' + code);
+        console.log(userInfo);
+        uni.setStorageSync('userInfo', userInfo);
+        utils.request(apiLink.AuthLoginByWeixin111, {
+          type: 'wx',
+          code: code,
+          userInfo: userInfo },
+        'POST', 'application/json').then(function (res) {
+          console.log(res);
+          if (res.statusCode === 1) {
+            uni.setStorageSync('token', res.content);
+            uni.setStorageSync('userId', res.userId);
+            resolve(res);
+          } else {
+            utils.toast(res.errMsg);
+            reject(res);
+          }
+
+          // if (res.errno === 0) {
+          // 	//存储用户信息
+          // 	uni.setStorageSync('userInfo', res.data.userInfo);
+          // 	uni.setStorageSync('X-Nideshop-Token', res.data.token);
+
+          // 	resolve(res);
+          // } else {
+          // 	utils.toast(res.errmsg)
+          // 	reject(res);
+          // }
+        }).catch(function (err) {
+          reject(err);
+        });
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+  /**
+      * 微信获取验证码封装
+      */
+  getCode: function getCode(seconds, phone) {
+    return new Promise(function (resolve, reject) {
+      utils.request(apiLink.getCode, {
+        phone: phone },
+      'POST', 'application/json').then(function (res) {
+        if (res.statusCode === 1) {
+          resolve(res);
+        } else {
+          reject(res.msg);
+        }
+      });
+    });
+  },
+  /**
+      * 处理各个微信登录
+      */
+  handleLogin: function handleLogin(params) {
+    return new Promise(function (resolve, reject) {
+      utils.request(apiLink.AuthLoginByWeixin, params, 'POST', 'application/json').then(function (res) {
+        resolve(res);
+      }).catch(function (err) {
+        reject(err.msg);
+      });
+    });
+  },
+  /**
+      * 封装修改保存地址
+      */
+  handleAdress: function handleAdress(newData) {
+    return new Promise(function (resolve, reject) {
+      utils.request(apiLink.AddressSave, newData, 'POST', 'application/json').then(function (res) {
+        console.log(res);
+        if (res.code === 200) {
+          resolve(res);
+        }
+      }).catch(function (err) {
+        reject(err.msg);
+      });
+    });
+  } };
+
+module.exports = {
+  apiLink: apiLink,
+  interfaceUrl: utils.interfaceUrl,
+  request: utils.request,
+  getToken: utils.getToken,
+  toast: utils.toast,
+  modal: utils.modal,
+  login: utils.login,
+  loginByWeixin: utils.loginByWeixin,
+  getCode: utils.getCode,
+  handleLogin: utils.handleLogin,
+  handleAdress: utils.handleAdress };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 164:
 /*!*******************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/uni-calendar/util.js ***!
   \*******************************************************************/
@@ -3791,7 +4112,7 @@ tui;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 159));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 165));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
 
 Calendar = /*#__PURE__*/function () {
   function Calendar()
@@ -4146,7 +4467,7 @@ Calendar;exports.default = _default;
 
 /***/ }),
 
-/***/ 159:
+/***/ 165:
 /*!***********************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/uni-calendar/calendar.js ***!
   \***********************************************************************/
@@ -4700,327 +5021,6 @@ var calendar = {
 
 
 calendar;exports.default = _default;
-
-/***/ }),
-
-/***/ 16:
-/*!************************************************!*\
-  !*** F:/xinchenstudyline/open-ui/utils/api.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _auth = __webpack_require__(/*! @/utils/auth */ 17);
-/**
-                                                   * 所有api请求地址
-                                                   */
-var apiLink = {
-  // 微信登录
-  AuthLoginByWeixin111: { url: '/pl/login ', text: '登录接口' },
-  // h5的登录注册
-  AuthLoginByWeixin: { url: '/pl/login', text: 'h5登录接口' },
-  getCode: { url: '/pl/vaildation', text: '获取手机验证码' },
-  reg: { url: '', text: '注册接口' },
-  resetpwd: { url: '/pl/phReset', text: "修改密码" },
-  // 我的页面的接口地址
-  getUserinfo: { url: '/api/tzUserApi/persInformation', text: '获取个人信息接口' },
-  AddressList: { url: '/api/userAddr/addrList', text: '收货地址列表' },
-  Addressdetail: { url: '/api/userAddr/addrById', text: '点击编辑进去修改页面' },
-  AddressSave: { url: '/api/userAddr/addrSave', text: '保存编辑收货地址' },
-  AddressDelete: { url: '/api/userAddr/addrDelete', text: '删除收货地址' },
-
-  // 日历写法
-  calendarList: { url: '/api/calebdarwork/list', text: '日历列表' },
-  calebdarInsert: { url: '/api/calebdarwork/calebdarInsert', text: '添加任务' },
-  calendarUpdate: { url: '/api/calebdarwork/calebdarUpdate', text: '修改任务' } };
-
-
-var utils = {
-  // 域名 + 'wechat/'
-  // httpUrl: 'http://127.0.0.1:8090/',
-
-
-
-
-  httpUrl: 'http://192.168.1.61:8090',
-
-  //接口地址
-  interfaceUrl: function interfaceUrl() {
-    return utils.httpUrl;
-  },
-  delayed: null,
-  /**
-                  * 请求数据处理
-                  * @param string url 请求地址
-                  * @param {*} postData 请求参数
-                  * @param string method 请求方式
-                  *  GET or POST
-                  * @param string contentType 数据格式
-                  *  'application/x-www-form-urlencoded'
-                  *  'application/json'
-                  * @param bool isDelay 是否延迟显示loading
-                  * @param bool hideLoading 是否隐藏loading
-                  *  true: 隐藏
-                  *  false:显示
-                  */
-  request: function request(httpurl)
-  {var postData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var method = arguments.length > 2 ? arguments[2] : undefined;var contentType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "application/x-www-form-urlencoded";var isDelay = arguments.length > 4 ? arguments[4] : undefined;var hideLoading = arguments.length > 5 ? arguments[5] : undefined;
-    //接口请求
-    var loadding = false;
-    utils.delayed && uni.hideLoading();
-    clearTimeout(utils.delayed);
-    utils.delayed = null;
-    if (!hideLoading) {
-      utils.delayed = setTimeout(function () {
-        uni.showLoading({
-          mask: true,
-          title: '请稍候...',
-          success: function success(res) {
-            loadding = true;
-          } });
-
-      }, isDelay ? 1000 : 0);
-    }
-
-    return new Promise(function (resolve, reject) {
-
-      uni.request({
-        url: utils.interfaceUrl() + httpurl.url,
-        data: postData,
-        header: {
-          // 'content-type': contentType,
-          'Authorization': (0, _auth.getToken)() },
-
-        method: method, //'GET','POST'
-        dataType: 'json',
-        success: function success(res) {
-          console.log("".concat(httpurl.text, "+").concat(utils.interfaceUrl(), " ").concat(httpurl.url, "+").concat(JSON.stringify(postData)));
-          console.log(res.data);
-          if (loadding && !hideLoading) {
-            uni.hideLoading();
-          }
-          if (res.statusCode === 200) {
-            if (res.data.errno === 401) {
-              //返回码401说明token过期或者用户未登录
-
-            } else if (res.data.errno === 500) {
-              utils.toast(res.data.msg);
-            } else if (res.data.errno === 404) {
-              utils.toast(res.data.msg);
-            } else if (res.data.statusCode === -10001) {
-              reject(res.msg);
-              uni.removeStorage({
-                key: 'token',
-                success: function success() {
-                  //个人中心页不跳转
-                  console.log(uni.getStorageSync("navUrl"));
-                  if (uni.getStorageSync("navUrl") != "pages/index/index") {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    uni.navigateTo({
-                      url: '/pages/common/wxlogin/wxlogin' });
-
-
-                  }
-                } });
-
-            } else
-            {
-              resolve(res.data);
-            }
-          } else {
-            reject(res.data);
-          }
-        },
-        fail: function fail(res) {
-          utils.toast("网络不给力，请稍后再试~");
-          reject(res);
-        },
-        complete: function complete(res) {
-          clearTimeout(utils.delayed);
-          utils.delayed = null;
-          if (res.statusCode === 200) {
-            if (res.data.errno === 0 || res.data.errno === 401) {
-              uni.hideLoading();
-            } else {
-              uni.hideLoading();
-              // utils.toast(res.data.msg)
-            }
-          } else {
-            utils.toast('服务器开小差了~');
-          }
-        } });
-
-    });
-  },
-  toast: function toast(text, duration, success) {
-    uni.showToast({
-      title: text || "出错啦~",
-      icon: success || 'none',
-      duration: duration || 2000 });
-
-  },
-  modal: function modal(title, content) {var showCancel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;var callback = arguments.length > 3 ? arguments[3] : undefined;var confirmColor = arguments.length > 4 ? arguments[4] : undefined;var confirmText = arguments.length > 5 ? arguments[5] : undefined;var cancelColor = arguments.length > 6 ? arguments[6] : undefined;var cancelText = arguments.length > 7 ? arguments[7] : undefined;
-    uni.showModal({
-      title: title || '提示',
-      content: content,
-      showCancel: showCancel,
-      cancelColor: cancelColor || "#555",
-      confirmColor: confirmColor || "#e41f19",
-      confirmText: confirmText || "确定",
-      cancelText: cancelText || "取消",
-      success: function success(res) {
-        if (res.confirm) {
-          callback && callback(true);
-        } else {
-          callback && callback(false);
-        }
-      } });
-
-  },
-
-  /**
-      * 调用微信登录
-      */
-  login: function login() {
-    return new Promise(function (resolve, reject) {
-      uni.login({
-        success: function success(res) {
-          if (res.code) {
-            resolve(res);
-          } else {
-            reject(res);
-          }
-        },
-        fail: function fail(err) {
-          reject(err);
-        } });
-
-    });
-  },
-
-  // 点击登录获取code，然后调登录接口进行登录
-  loginByWeixin: function loginByWeixin(userInfo) {
-    var code = null;
-    return new Promise(function (resolve, reject) {
-      return utils.login().then(function (res) {
-        code = res.code;
-        return userInfo;
-      }).then(function (userInfo) {
-        //登录远程服务器
-        console.log('code:' + code);
-        console.log(userInfo);
-        uni.setStorageSync('userInfo', userInfo);
-        utils.request(apiLink.AuthLoginByWeixin111, {
-          type: 'wx',
-          code: code,
-          userInfo: userInfo },
-        'POST', 'application/json').then(function (res) {
-          console.log(res);
-          if (res.statusCode === 1) {
-            uni.setStorageSync('token', res.content);
-            uni.setStorageSync('userId', res.userId);
-            resolve(res);
-          } else {
-            utils.toast(res.errMsg);
-            reject(res);
-          }
-
-          // if (res.errno === 0) {
-          // 	//存储用户信息
-          // 	uni.setStorageSync('userInfo', res.data.userInfo);
-          // 	uni.setStorageSync('X-Nideshop-Token', res.data.token);
-
-          // 	resolve(res);
-          // } else {
-          // 	utils.toast(res.errmsg)
-          // 	reject(res);
-          // }
-        }).catch(function (err) {
-          reject(err);
-        });
-      }).catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-  /**
-      * 微信获取验证码封装
-      */
-  getCode: function getCode(seconds, phone) {
-    return new Promise(function (resolve, reject) {
-      utils.request(apiLink.getCode, {
-        phone: phone },
-      'POST', 'application/json').then(function (res) {
-        if (res.statusCode === 1) {
-          resolve(res);
-        } else {
-          reject(res.msg);
-        }
-      });
-    });
-  },
-  /**
-      * 处理各个微信登录
-      */
-  handleLogin: function handleLogin(params) {
-    return new Promise(function (resolve, reject) {
-      utils.request(apiLink.AuthLoginByWeixin, params, 'POST', 'application/json').then(function (res) {
-        resolve(res);
-      }).catch(function (err) {
-        reject(err.msg);
-      });
-    });
-  },
-  /**
-      * 封装修改保存地址
-      */
-  handleAdress: function handleAdress(newData) {
-    return new Promise(function (resolve, reject) {
-      utils.request(apiLink.AddressSave, newData, 'POST', 'application/json').then(function (res) {
-        console.log(res);
-        if (res.code === 200) {
-          resolve(res);
-        }
-      }).catch(function (err) {
-        reject(err.msg);
-      });
-    });
-  } };
-
-module.exports = {
-  apiLink: apiLink,
-  interfaceUrl: utils.interfaceUrl,
-  request: utils.request,
-  getToken: utils.getToken,
-  toast: utils.toast,
-  modal: utils.modal,
-  login: utils.login,
-  loginByWeixin: utils.loginByWeixin,
-  getCode: utils.getCode,
-  handleLogin: utils.handleLogin,
-  handleAdress: utils.handleAdress };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
@@ -10573,7 +10573,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10594,14 +10594,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10686,7 +10686,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -11093,7 +11093,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 216:
+/***/ 222:
 /*!**********************************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/thorui/tui-calendar/tui-calendar.js ***!
   \**********************************************************************************/
@@ -11664,7 +11664,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 224:
+/***/ 230:
 /*!***********************************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/simple-address/city-data/province.js ***!
   \***********************************************************************************/
@@ -11818,7 +11818,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 225:
+/***/ 231:
 /*!*******************************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/simple-address/city-data/city.js ***!
   \*******************************************************************************/
@@ -13336,7 +13336,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 226:
+/***/ 232:
 /*!*******************************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/simple-address/city-data/area.js ***!
   \*******************************************************************************/
@@ -31708,7 +31708,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADV
 
 /***/ }),
 
-/***/ 92:
+/***/ 98:
 /*!************************************************************************************!*\
   !*** F:/xinchenstudyline/open-ui/components/common/tui-clipboard/tui-clipboard.js ***!
   \************************************************************************************/

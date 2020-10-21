@@ -172,66 +172,83 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uCharts = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/u-charts/u-charts/u-charts.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+
+
+
+
+
+
+
+var _uCharts = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/u-charts/u-charts/u-charts.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var canvaPie = null; //饼图
 var canvaLineA = null; //折线图
 var canvaColumn = null; //柱状图
-var _self;var _default = { data: function data() {return { cWidth: '', cHeight: '', pixelRatio: 1 //像素比例率
-    };}, onLoad: function onLoad() {_self = this;this.cWidth = uni.upx2px(750); //宽度
+var canvaColumnn = null;
+var canvaColumnrow = null; //横屏柱状图
+var _self;var _default =
+{
+  data: function data() {
+    return {
+      cWidth: '',
+      cHeight: '',
+      pixelRatio: 1 //像素比例率
+    };
+  },
+  onLoad: function onLoad() {
+    _self = this;
+    this.cWidth = uni.upx2px(750); //宽度
     this.cHeight = uni.upx2px(500); //高度
     this.getServerData(); //调接口
-  }, methods: { /**
-                 * 调接口
-                 */getServerData: function getServerData() {uni.request({ url: 'https://www.ucharts.cn/data.json', data: {}, success: function success(res) {console.log(res); // -----------饼图的代码开始------------
-          var Pie = { series: [] };Pie.series = res.data.data.Pie.series;_self.showPie("canvasPie", Pie); //canvasPie这个是canvas-id得到的，Pie是数据
+  },
+  methods: _defineProperty({
+    /**
+                              * 调接口
+                              */
+    getServerData: function getServerData() {
+      uni.request({
+        url: 'https://www.ucharts.cn/data.json',
+        data: {},
+        success: function success(res) {
+          console.log(res);
+          // -----------饼图的代码开始------------
+          var Pie = {
+            series: [] };
+
+          Pie.series = res.data.data.Pie.series;
+          _self.showPie("canvasPie", Pie); //canvasPie这个是canvas-id得到的，Pie是数据
           // -----------饼图的代码结束------------
           // -----------折线图开始----------------
-          var LineA = { categories: [], series: [] };LineA.categories = res.data.data.LineA.categories;LineA.series = res.data.data.LineA.series;_self.showLineA("canvasLineA", LineA); // -----------折线图结束----------------
+          var LineA = { categories: [], series: [] };
+          LineA.categories = res.data.data.LineA.categories;
+          LineA.series = res.data.data.LineA.series;
+          _self.showLineA("canvasLineA", LineA);
+          // -----------折线图结束----------------
           // -----------柱状图开始-------------
-          var Column = { categories: [], series: [] };Column.categories = res.data.data.Column.categories;Column.series = res.data.data.Column.series;_self.showColumn("canvasColumn", Column); // -----------柱状图结束-------------
+          var Column = { categories: [], series: [] };
+          Column.categories = res.data.data.Column.categories;
+          Column.series = res.data.data.Column.series;
+          _self.showColumn("canvasColumn", Column);
+          // -----------柱状图结束-------------
           // -----------条状图开始-------------
-          var ColumnColumn = { categories: [], series: [] };ColumnColumn.categories = res.data.data.ColumnB.categories;ColumnColumn.series = res.data.data.ColumnB.series;_self.showColumnColumn("canvasColumn", ColumnColumn); // -----------条状图结束-------------
-        }, fail: function fail() {_self.$util.toast('网络错误，小程序端请检查合法域名');} });},
+          var ColumnColumn = { categories: [], series: [] };
+          ColumnColumn.categories = res.data.data.ColumnB.categories;
+          ColumnColumn.series = res.data.data.ColumnB.series;
+          _self.showColumnColumn("canvasColumnn", ColumnColumn);
+          // -----------条状图结束-------------
+          // -----------横屏柱状图-------------
+          var ColumnRow = { categories: [], series: [] };
+          ColumnRow.categories = res.data.data.ColumnB.categories;
+          ColumnRow.series = res.data.data.ColumnB.series;
+          _self.showColumnRow("canvasColumnrow", ColumnRow);
+          // -----------横屏柱状图-------------
+        },
+        fail: function fail() {
+          _self.$util.toast('网络错误，小程序端请检查合法域名');
+        } });
+
+    },
     // ----------饼图开始------------------
     showPie: function showPie(canvasId, chartData) {
       canvaPie = new _uCharts.default({
@@ -363,7 +380,7 @@ var _self;var _default = { data: function data() {return { cWidth: '', cHeight: 
     // -----------柱状图结束-------------
     // -----------条状图开始-------------
     showColumnColumn: function showColumnColumn(canvasId, chartData) {
-      canvaColumn = new _uCharts.default({
+      canvaColumnn = new _uCharts.default({
         $this: _self,
         canvasId: canvasId,
         type: 'column',
@@ -397,10 +414,46 @@ var _self;var _default = { data: function data() {return { cWidth: '', cHeight: 
 
 
 
-    }
+    },
 
     // -----------条状图结束-------------
-  } };exports.default = _default;
+    // -----------横屏柱状图开始---------
+    showColumnRow: function showColumnRow(canvasId, chartData) {
+      canvaColumnrow = new _uCharts.default({
+        $this: _self,
+        canvasId: canvasId,
+        type: 'column',
+        legend: {
+          show: true },
+
+        fontSize: 11,
+        background: "#fff",
+        pixelRatio: _self.pixelRatio,
+        animation: true,
+        rotate: true,
+
+
+
+        categories: chartData.categories,
+        series: chartData.series, //
+        xAxis: {
+          disableGrid: true //是否绘制X轴网格
+        },
+        yAxis: {},
+
+
+        dataLabel: true, //是否在图表中显示数据标签内容值
+        width: _self.cWidth * _self.pixelRatio,
+        height: _self.cHeight * _self.pixelRatio });
+
+    } }, "touchColumn", function touchColumn(
+  e) {
+    canvaColumnrow.showToolTip(e, {
+      format: function format(item, category) {
+        return category + ' ' + item.name + ':' + item.data;
+      } });
+
+  }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -75,6 +75,12 @@
 			}
 		},
 		{
+			"path": "pages/charts/wxecharts",
+			"style": {
+				"navigationBarTitleText": "微信图表"
+			}
+		},
+		{
 			"path": "pages/common/about/about",
 			"style": {
 				"app-plus": {
@@ -185,6 +191,12 @@
 			{
 				"pagePath": "pages/find/find",
 				"text": "发现",
+				"iconPath": "static/images/tabbar/code_gray.png",
+				"selectedIconPath": "static/images/tabbar/code_active.png"
+			},
+			{
+				"pagePath": "pages/charts/wxecharts",
+				"text": "微信图表",
 				"iconPath": "static/images/tabbar/code_gray.png",
 				"selectedIconPath": "static/images/tabbar/code_active.png"
 			},
